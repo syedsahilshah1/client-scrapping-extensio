@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeadPulse AI - Google Maps Lead Scraper & Tech Auditor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="lp-container">
+    <!-- Top Header -->
+    <header class="lp-header">
+      <div class="lp-brand">
+        <div class="lp-logo">⚡</div>
+        <div class="lp-titles">
+          <h1>LeadPulse <span class="lp-ai-tag">AI</span></h1>
+          <p class="lp-subtitle">Google Maps Lead Gen & Tech Auditor</p>
+        </div>
+      </div>
+      <div class="lp-header-actions">
+        <button id="btn-plan-pill" class="lp-plan-pill" title="Click to view plan or activate Pro">FREE</button>
+        <button id="btn-upgrade-top" class="lp-btn-upgrade" title="Upgrade to LeadPulse Pro">⚡ Upgrade</button>
+        <button id="btn-open-tab" class="lp-icon-btn" title="Open Dashboard in Full Tab">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Search / Target Niche Section -->
+    <section class="lp-search-section">
+      <div class="lp-search-input-group">
+        <svg class="lp-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="target-search-query" class="lp-niche-input" placeholder="Enter niche & city (e.g. Restaurants in Islamabad)...">
+      </div>
+      <div class="lp-quick-tags">
+        <span class="lp-tag-label">Try:</span>
+        <button class="lp-tag-btn" data-query="Restaurants in Islamabad">🍽️ Restaurants</button>
+        <button class="lp-tag-btn" data-query="Dentists in Miami">🦷 Dentists</button>
+        <button class="lp-tag-btn" data-query="Plumbers in Dallas">🔧 Plumbers</button>
+        <button class="lp-tag-btn" data-query="Real estate agencies">🏠 Real Estate</button>
+      </div>
+    </section>
+
+    <!-- Main Control Bar -->
+    <section class="lp-control-section">
+      <div class="lp-action-buttons">
+        <button id="btn-start" class="lp-btn lp-btn-start">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span id="start-btn-label">Start Prospecting</span>
+        </button>
+        <button id="btn-pause" class="lp-btn lp-btn-pause" style="display:none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+          <span>Pause</span>
+        </button>
+        <button id="btn-stop" class="lp-btn lp-btn-stop" style="display:none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"></rect></svg>
+          <span>Stop</span>
+        </button>
+      </div>
+      <div id="status-ticker" class="lp-status-ticker">Ready to scan Google Maps</div>
+    </section>
+
+    <!-- KPI / Stats Summary -->
+    <section class="lp-stats-grid">
+      <div class="lp-stat-card">
+        <div class="lp-stat-num" id="stat-total">0</div>
+        <div class="lp-stat-desc">Total Scraped</div>
+      </div>
+      <div class="lp-stat-card lp-stat-highlight">
+        <div class="lp-stat-num" id="stat-high">0</div>
+        <div class="lp-stat-desc">High Priority</div>
+      </div>
+      <div class="lp-stat-card">
+        <div class="lp-stat-num" id="stat-no-site">0</div>
+        <div class="lp-stat-desc">No Website</div>
+      </div>
+      <div class="lp-stat-card">
+        <div class="lp-stat-num" id="stat-gaps">0</div>
+        <div class="lp-stat-desc">Tech Gaps</div>
+      </div>
+    </section>
+
+    <!-- Settings Accordion -->
+    <details class="lp-settings-panel">
+      <summary class="lp-settings-summary">
+        <span>⚙️ Prospecting & Audit Settings</span>
+        <span class="lp-chevron">▾</span>
+      </summary>
+      <div class="lp-settings-body">
+        <div class="lp-form-row">
+          <label for="setting-max-leads">Target Lead Limit</label>
+          <select id="setting-max-leads" class="lp-select">
+            <option value="15">15 Leads (Quick Sample)</option>
+            <option value="30">30 Leads</option>
+            <option value="50" selected>50 Leads (Recommended)</option>
+            <option value="100">100 Leads</option>
+            <option value="250">250 Leads (Deep Pipeline)</option>
+          </select>
+        </div>
+
+        <div class="lp-form-row">
+          <label for="setting-mode">Scraping Mode</label>
+          <select id="setting-mode" class="lp-select">
+            <option value="fast" selected>Fast Scan (From Feed Cards)</option>
+            <option value="deep">Deep Inspection (Click Into Detail)</option>
+          </select>
+        </div>
+
+        <div class="lp-form-row">
+          <label for="setting-delay">Scroll Delay</label>
+          <select id="setting-delay" class="lp-select">
+            <option value="1200">1.2 seconds (Fast)</option>
+            <option value="2000" selected>2.0 seconds (Normal)</option>
+            <option value="3500">3.5 seconds (Stealth)</option>
+          </select>
+        </div>
+
+        <div class="lp-form-row lp-checkbox-row">
+          <label class="lp-checkbox-label">
+            <input type="checkbox" id="setting-audit" checked>
+            <span>Live Web Presence & Tech Stack Audit</span>
+          </label>
+        </div>
+
+        <div class="lp-sync-divider"></div>
+
+        <!-- Google Live Sync Settings -->
+        <div class="lp-gsheet-config-box">
+          <div class="lp-gsheet-header">
+            <span class="lp-gsheet-title">🟢 Google Sheets Live Sync</span>
+            <button id="btn-show-gsheet-guide" class="lp-text-link">30s Setup Guide</button>
+          </div>
+          <div class="lp-form-row lp-checkbox-row" style="margin-top:2px;">
+            <label class="lp-checkbox-label">
+              <input type="checkbox" id="setting-google-sync">
+              <span>Auto-sync leads live to Google Sheet as scraped</span>
+            </label>
+          </div>
+          <div class="lp-gsheet-input-wrap">
+            <input type="text" id="setting-google-webhook" class="lp-search-input" placeholder="Paste Google Apps Script Web App URL...">
+            <button id="btn-test-gsheet" class="lp-btn lp-btn-secondary lp-btn-sm" title="Test Webhook Connection">Test</button>
+          </div>
+          <button id="btn-quick-copy-code" class="lp-btn lp-btn-secondary lp-btn-xs" style="width:100%; margin-top:4px; font-size:10px; color:#818cf8; border-color:rgba(99,102,241,0.3); justify-content:center;">
+            📋 Copy Code to Paste in Google Sheet (Extensions &gt; Apps Script)
+          </button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Export & Tools Toolbar -->
+    <section class="lp-export-bar">
+      <div class="lp-export-btns">
+        <button id="btn-export-xlsx" class="lp-btn lp-btn-export lp-btn-excel" title="Download Excel .xlsx with formatted columns">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line><line x1="10" y1="9" x2="10" y2="9"></line></svg>
+          Excel
+        </button>
+        <button id="btn-export-csv" class="lp-btn lp-btn-export" title="Download Standard CSV">
+          CSV
+        </button>
+        <button id="btn-copy-clipboard" class="lp-btn lp-btn-export lp-btn-copy" title="Copy all leads to clipboard (Open Excel/Sheets and press Ctrl+V)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy (Ctrl+V)
+        </button>
+        <button id="btn-copy-code" class="lp-btn lp-btn-export lp-btn-code" title="Copy Apps Script Code to paste in Google Sheet (Extensions > Apps Script)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          📋 Copy Code
+        </button>
+        <button id="btn-sync-gsheet" class="lp-btn lp-btn-export lp-btn-gsheet" title="Sync leads directly to your Google Sheet">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          Google Sheet
+        </button>
+      </div>
+      <button id="btn-clear" class="lp-btn lp-btn-text-danger" title="Clear All Scraped Leads">Clear</button>
+    </section>
+
+    <!-- Filters & Search -->
+    <div class="lp-filter-bar">
+      <input type="text" id="filter-search" class="lp-search-input" placeholder="Search by name, category, or city...">
+      <select id="filter-score" class="lp-select lp-select-sm">
+        <option value="all">All Scores</option>
+        <option value="HIGH">High Priority</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="LOW">Low</option>
+        <option value="NO_SITE">No Website Only</option>
+      </select>
+    </div>
+
+    <!-- Live Leads Feed List -->
+    <section class="lp-table-container">
+      <div id="leads-list" class="lp-leads-list">
+        <!-- Rendered by popup.js -->
+      </div>
+      <div id="empty-state" class="lp-empty-state">
+        <div class="lp-empty-icon">📍</div>
+        <div class="lp-empty-title">No leads collected yet</div>
+        <p class="lp-empty-text">Open Google Maps, enter your target niche and location (e.g. <em>"Plumbers in Austin"</em>), then click <strong>Start Prospecting</strong>.</p>
+        <button id="btn-open-gmaps" class="lp-btn lp-btn-outline">Open Google Maps</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Detail Pitch Modal -->
+  <div id="pitch-modal" class="lp-modal" style="display:none;">
+    <div class="lp-modal-content">
+      <div class="lp-modal-header">
+        <h3 id="modal-business-name">Business Name</h3>
+        <button id="modal-close" class="lp-modal-close">&times;</button>
+      </div>
+      <div class="lp-modal-body">
+        <div class="lp-modal-meta" id="modal-meta"></div>
+        <div class="lp-pitch-card">
+          <div class="lp-pitch-title">🎯 Tailored Cold Pitch</div>
+          <p id="modal-pitch-text" class="lp-pitch-text"></p>
+          <button id="btn-copy-pitch" class="lp-btn lp-btn-primary lp-btn-sm">Copy Pitch</button>
+        </div>
+        <div class="lp-gaps-section">
+          <div class="lp-gaps-title">Detected Opportunities & Gaps</div>
+          <div id="modal-gaps-list" class="lp-gaps-tags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Sheets Setup & Code Modal -->
+  <div id="gsheet-modal" class="lp-modal" style="display:none;">
+    <div class="lp-modal-content" style="max-width: 460px;">
+      <div class="lp-modal-header">
+        <h3 id="modal-gsheet-heading">📋 Google Sheet & Apps Script Integration</h3>
+        <button id="modal-gsheet-close" class="lp-modal-close">&times;</button>
+      </div>
+      <div class="lp-modal-body">
+        <!-- Sheet Link Banner -->
+        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.25); border-radius:6px; padding:6px 10px; margin-bottom:10px;">
+          <span style="font-size:11px; color:#cbd5e1;">Target Sheet ID: <strong style="color:#818cf8;">1icDCheARP...</strong></span>
+          <a id="link-open-active-sheet" href="https://docs.google.com/spreadsheets/d/1icDCheARP2uZVGVmudBQMrzyLti1RsbH4hEaT8JyZXk/edit?gid=1890934928#gid=1890934928" target="_blank" style="font-size:11px; color:#38bdf8; text-decoration:none; font-weight:600;">Open Sheet ↗</a>
+        </div>
+
+        <!-- Mode Tabs -->
+        <div class="lp-modal-tabs" style="display:flex; gap:4px; margin-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:6px;">
+          <button id="tab-direct-import" class="lp-tab-btn active" style="flex:1; padding:5px 8px; font-size:10px; font-weight:600; border-radius:4px; cursor:pointer; background:#4f46e5; color:#fff; border:none;">⚡ 1. Direct Run Script</button>
+          <button id="tab-live-webhook" class="lp-tab-btn" style="flex:1; padding:5px 8px; font-size:10px; font-weight:600; border-radius:4px; cursor:pointer; background:rgba(30,41,59,0.8); color:#94a3b8; border:1px solid rgba(255,255,255,0.08);">🟢 2. Live Webhook</button>
+          <button id="tab-direct-tsv" class="lp-tab-btn" style="flex:1; padding:5px 8px; font-size:10px; font-weight:600; border-radius:4px; cursor:pointer; background:rgba(30,41,59,0.8); color:#94a3b8; border:1px solid rgba(255,255,255,0.08);">📋 3. Paste (Ctrl+V)</button>
+        </div>
+
+        <!-- Instructions Dynamic Container -->
+        <div id="gsheet-instructions" style="margin-bottom:8px; font-size:11px; color:#cbd5e1; line-height:1.45;">
+          <ol style="margin-left: 18px; margin-bottom: 6px;">
+            <li>In your Google Sheet, click top menu: <strong>Extensions &gt; Apps Script</strong>.</li>
+            <li>Select all existing code (Ctrl+A), delete it, and <strong>paste the code below</strong>.</li>
+            <li>Click <strong>Save (💾)</strong>, then click <strong>Run (▶)</strong> at the top.</li>
+            <li>All leads are immediately inserted into your sheet!</li>
+          </ol>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span id="script-type-label" style="font-size: 10px; font-weight: 700; color: #818cf8; text-transform: uppercase;">Direct Importer Script</span>
+          <button id="btn-copy-apps-script" class="lp-btn lp-btn-primary lp-btn-sm">📋 Copy Code</button>
+        </div>
+
+        <pre id="apps-script-code-block" style="background:#090d16; border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; font-size:10px; color:#94a3b8; max-height:160px; overflow-y:auto; font-family:monospace; line-height:1.4; white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upgrade / License Modal -->
+  <div id="upgrade-modal" class="lp-modal" style="display:none;">
+    <div class="lp-modal-content" style="max-width: 420px;">
+      <div class="lp-modal-header">
+        <h3 style="display:flex; align-items:center; gap:6px;">
+          <span>⭐</span>
+          <span style="background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:800;">LeadPulse AI Pro</span>
+        </h3>
+        <button id="modal-upgrade-close" class="lp-modal-close">&times;</button>
+      </div>
+      <div class="lp-modal-body">
+        <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px;">
+          Supercharge your agency prospecting with unlimited Google Maps extraction, full tech auditing, and instant cloud sync.
+        </p>
+
+        <!-- Pro Features List -->
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(251, 191, 36, 0.25); border-radius: 8px; padding: 10px; margin-bottom: 12px; font-size: 11px; line-height: 1.6;">
+          <div style="color: #fbbf24; font-weight: 700; font-size: 10px; text-transform: uppercase; margin-bottom: 4px;">Pro Features Included:</div>
+          <div style="color: #f8fafc;">✨ <strong>Unlimited Leads</strong> (Extract 250+ leads per run)</div>
+          <div style="color: #f8fafc;">📱 <strong>Deep Social Links</strong> (FB, IG, LinkedIn, X, TikTok, YouTube)</div>
+          <div style="color: #f8fafc;">✉️ <strong>Direct Contact Emails</strong> from verified company sites</div>
+          <div style="color: #f8fafc;">🟢 <strong>Google Sheets Live Sync & Apps Script Importer</strong></div>
+          <div style="color: #f8fafc;">🎯 <strong>AI Personalized Cold Outreach Pitches</strong></div>
+        </div>
+
+        <!-- Checkout / Buy button -->
+        <a id="link-checkout-pro" href="https://gumroad.com" target="_blank" class="lp-btn lp-btn-start" style="text-align:center; justify-content:center; text-decoration:none; margin-bottom:12px; font-weight:700; background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
+          Get License Key ($19 / month or Lifetime) ↗
+        </a>
+
+        <!-- License Key Activation -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+          <label style="font-size: 10px; font-weight: 600; color: #cbd5e1; display:block; margin-bottom: 4px;">Already have a license key?</label>
+          <div style="display:flex; gap: 6px;">
+            <input type="text" id="input-license-key" class="lp-search-input" placeholder="Paste license key (e.g. PRO-VIP-2026)...">
+            <button id="btn-activate-license" class="lp-btn lp-btn-primary lp-btn-sm" style="background:#4f46e5;">Activate</button>
+          </div>
+          <div id="license-feedback" style="font-size: 10px; margin-top: 4px; min-height: 14px;"></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 8px; font-size: 10px; color: #64748b;">
+          <span>Demo key: <code style="color:#fbbf24; cursor:pointer;" id="code-demo-key">PRO-VIP-2026</code></span>
+          <button id="btn-deactivate-license" class="lp-text-link" style="color:#f87171; display:none;">Deactivate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../lib/xlsx.full.min.js"></script>
+  <script src="../lib/exporter.js"></script>
+  <script src="../background/pitchGenerator.js"></script>
+  <script src="../background/googleSync.js"></script>
+  <script src="../background/licenseManager.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
+
