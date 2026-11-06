@@ -1,0 +1,24 @@
+{
+  "name": "leadpulse-ai-extension",
+  "version": "1.0.0",
+  "description": "AI-Powered Google Maps Lead Generation & Tech Auditor Chrome Extension (Manifest V3)",
+  "main": "background/background.js",
+  "scripts": {
+    "test": "node test/auditor.test.js && node test/exporter.test.js && node test/googleSync.test.js && node test/license.test.js",
+    "generate-icons": "node scripts/generate_icons.js"
+  },
+  "keywords": [
+    "lead-generation",
+    "google-maps-scraper",
+    "seo-audit",
+    "web-development",
+    "chrome-extension",
+    "manifest-v3",
+    "sheetjs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
